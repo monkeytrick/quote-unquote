@@ -1,0 +1,13 @@
+{
+    "name": "brian/quote-unquote",
+    "require": {
+        "symfony/browser-kit": "^6.3",
+        "symfony/http-client": "^6.3",
+        "symfony/css-selector": "^6.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "Brian\\QuoteUnquote\\": "src/"
+        }
+    }
+}
