@@ -7,19 +7,14 @@ use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 
-// $main = [];
+function url_call(String $query, $search_params) { 
 
-function url_call(String $query, $url_append) { 
-
+    // Base URL
     $url = 'http://www.quotationspage.com/quotes/';
 
-    if($url_append !== null) {
-        $url = $url.$url_append;
+    if($search_params !== null) {
+        $url = $url.$search_params;
     }
-
-    // var_dump($url);
-
-    // echo $query;
 
     $browser = new HttpBrowser(HttpClient::create());
 
@@ -29,24 +24,18 @@ function url_call(String $query, $url_append) {
 
     $crawler = new Crawler($response_HTML);
 
-    // var_dump($crawler);
-
     if($query == 'begin') {
+        // Working
       return $crawler->filter('#content > table > tr > td > a');
     }
-    // var_dump($main);
+
+    if($query == 'challenge') {
+        //Need to keep track of quotes given
+        //Randomize quote
+        $num = rand(0,7);
+        var_dump($crawler->filter('.quote > a')->eq($num)->text());
+    }
 }
-
-
-// $browser = new HttpBrowser(HttpClient::create());
-
-// $browser->request('GET', 'http://www.quotationspage.com/quotes');
-
-// $response_HTML = $browser->getResponse();
-
-// $crawler = new Crawler($response_HTML);
-
-// $main = $crawler->filter('#content > table > tr > td > a');
 
 ?>
 

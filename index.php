@@ -4,43 +4,25 @@ use Symfony\Component\DomCrawler\Crawler;
 
 require 'functions.php';
 
-// use Symfony\Component\DomCrawler\Crawler;
+// JS to send fetch request to end point
+//if(isset) call function - consider separating this into new file
+// consider API endpoint - true
 
-// require 'vendor/autoload.php';
+if(isset($_GET['q']) && $_GET['q'] == 'challenge') {
 
-// use Symfony\Component\BrowserKit\HttpBrowser;
-// use Symfony\Component\HttpClient\HttpClient;
-// use Symfony\Component\DomCrawler\Crawler;
-// use Symfony\Component\CssSelector\CssSelectorConverter;
+    $persons = [$_GET['p1'], $_GET['p2']];
 
-// function url_Call([query], url_affix) {
+    $random = array_rand($persons);
 
-//     //if retrieve persons
+    $selected = $persons[$random];
 
-//     //if retrieve quotes
-            //select from one at random and pull this - return result with name
-
-//     // JS to send fetch request to end point
-//         //if(isset) call function - consider separating this into new file
-//     // consider API endpoint - true
-// };
-
-if(isset($_GET['type'])) {
-
-    //Check or sanitize GET
-
-    $get_random = array_rand($_GET);
-    $person = $_GET[$get_random];
-    // echo "GET WUPTE FOR " . $person;
-    // echo $get_random;
-    // var_dump($_GET);
-
-    // url_call(challenge, $person);
+    $get_quote = url_call('challenge', $selected);
 
 }
 
 else {
-    $main = url_call('begin', null);
+    $persons = url_call('begin', null);
+    
 }
 
 
@@ -57,7 +39,7 @@ else {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quote-Unquote</title>
+    <title>Quote/Unquote</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 </head>
 <body>
@@ -80,10 +62,9 @@ else {
         <div class="row">
             <?php 
             
-                $main->each(function (Crawler $node) {
-                    // echo "<a href='{$node->text()}'>{$node->text()}</a><br>";
+                $persons->each(function (Crawler $node) {
                     echo "<div class='col col-lg-3'>
-                            <a href='{$node->attr('href')}'>{$node->text()}</a>
+                            <a href='{$node->attr('href')}'>{$node->text()}</a>   
                           </div>";
                 });            
             ?>
