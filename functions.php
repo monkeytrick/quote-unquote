@@ -1,13 +1,21 @@
 <?php
-
+session_start();
 require 'vendor/autoload.php';
+
+error_reporting(E_ALL);
 
 use Symfony\Component\BrowserKit\HttpBrowser;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\CssSelector\CssSelectorConverter;
 
+// Keep track of quotes used
+if(!isset($_SESSION['Quotes_Used'])) {
+    $_SESSION['Quotes_Used'] = [];
+}
+
 function url_call(String $query, $search_params) { 
+
 
     // Base URL
     $url = 'http://www.quotationspage.com/quotes/';
@@ -30,43 +38,44 @@ function url_call(String $query, $search_params) {
 
     if($query == 'challenge') {
 
-        // Keep track of quotes used
-        $all_quotes_used = [ ['name' => 'Joe', 'quotes' => [1,2,3]], ['name' => 'Bloggs', 'quotes' => [4,5,6]],
-                                ['name' => 'Jeff', 'quotes' => [7,8,9]], ['name' => 'Kam', 'quotes' => [10,20,30]] ];
-        //search_parms
-        $name = 'Kam';
-
-        // Check whether quote has been given previously
-        $found = false;
+        //Get name to append to URL
+        $name = $search_params;
 
         // Index position of array that contains the numbers to be excluded in random. Default to last item in array
         $index_pos = 0;
 
-        foreach ($all_quotes_used as $key => $value) {
+       //////// Check whether name in session array
+       $found = false;
+
+       foreach ($_SESSION['Quotes_Used'] as $key => $value) {
             if($value['name'] == $name){
+                // echo "Key is " . $value['name'];
                 $found = true;
                 //Set index position to place in array
                 $index_pos = $key;
-                echo "Position is " . $index_pos;
                 break;
             }
-            
-        // Add to array containing person's quotes
+        }
+
+        ////// Add to session array if not found in above search
         if($found == false) {
             $newa['name'] = $search_params;
             $newa['quotes'] = [];
-            $all_quotes_used[] = $newa;
-            $index_pos = count($all_quotes_used) - 1;
+            $_SESSION['Quotes_Used'][] = $newa;
+            $index_pos = count($_SESSION['Quotes_Used']) - 1;
         }
 
-        // Generate random number for quote, excluding those already used
-        $x = 0;
+        // Generate random number, excluding those in array containing quotes already used, to be passed to crawler
+        $rando = 0;
+        while( in_array( ($rando = random_int(0,7)), $_SESSION['Quotes_Used'][$index_pos]['quotes']) );
 
-        while( in_array( ($rando = random_int(0,7)), $all_quotes_used[$index_pos]['quotes']) );
+        //Add number of quote to array containing quotes already used 
+        array_push($_SESSION['Quotes_Used'][$index_pos]['quotes'], $rando);
 
-        echo "RANDO IS " . $x;
+        // Return quote and name of person
+        var_dump($crawler->filter('.quote > a')->eq($rando)->text());
     }
-}}
+}
 
 ?>
 
