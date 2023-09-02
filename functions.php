@@ -20,6 +20,7 @@ function url_call(String $query, $search_params) {
     // Base URL
     $url = 'http://www.quotationspage.com/quotes/';
 
+
     if($search_params !== null) {
         $url = $url.$search_params;
     }
@@ -32,8 +33,25 @@ function url_call(String $query, $search_params) {
 
     $crawler = new Crawler($response_HTML);
 
+
     if($query == 'begin') {
-      return $crawler->filter('#content > table > tr > td > a');
+        
+      $trial = [];
+
+      $persons = $crawler->filter('#content > table > tr > td > a');
+
+      $trial = $persons->each(function (Crawler $node)  {
+
+        $holder['name'] = $node->text();
+        $holder['url'] = $node->attr('href');
+
+        return $holder;
+
+    }); 
+    print_r(json_encode($trial));
+    // return json_encode()
+// return json_encode($trial);
+
     }
 
     if($query == 'challenge') {
@@ -65,6 +83,14 @@ function url_call(String $query, $search_params) {
             $index_pos = count($_SESSION['Quotes_Used']) - 1;
         }
 
+        // Check whether max. no of quotes reached 
+        if(count($_SESSION['Quotes_Used'][$index_pos]['quotes']) == 7) {
+            // Change to return error
+            echo "maximum number of quotes used";
+            exit;
+        }
+
+
         // Generate random number, excluding those in array containing quotes already used, to be passed to crawler
         $rando = 0;
         while( in_array( ($rando = random_int(0,7)), $_SESSION['Quotes_Used'][$index_pos]['quotes']) );
@@ -74,6 +100,8 @@ function url_call(String $query, $search_params) {
 
         // Return quote and name of person
         var_dump($crawler->filter('.quote > a')->eq($rando)->text());
+
+        //Re-set session variables if player wants more than seven goes
     }
 }
 

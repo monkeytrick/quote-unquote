@@ -62,11 +62,11 @@ else {
         <div class="row">
             <?php 
             
-                $persons->each(function (Crawler $node) {
-                    echo "<div class='col col-lg-3'>
-                            <a href='{$node->attr('href')}'>{$node->text()}</a>   
-                          </div>";
-                });            
+                // $persons->each(function (Crawler $node) {
+                //     echo "<div class='col col-lg-3'>
+                //             <a href='{$node->attr('href')}'>{$node->text()}</a>   
+                //           </div>";
+                // });            
             ?>
         </div>
     </div>
