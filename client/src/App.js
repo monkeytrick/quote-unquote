@@ -1,6 +1,7 @@
 // import logo from './logo.svg';
 import './App.css';
 import Header from './Header';
+import PeopleOptions from './PeopleOptions';
 
 function App() {
   return (
@@ -8,10 +9,10 @@ function App() {
       <Header />
 
       <PeopleOptions/>
-      Form display fields
+      {/* Form display fields
       Name list
       Quote as modal or field
-      Area to display given quotes
+      Area to display given quotes */}
       {/* <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>

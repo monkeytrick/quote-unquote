@@ -33,7 +33,7 @@ function url_call(String $query, $search_params) {
 
     $crawler = new Crawler($response_HTML);
 
-
+    // Get names and URLS for front page
     if($query == 'begin') {
         
       $trial = [];
@@ -48,19 +48,18 @@ function url_call(String $query, $search_params) {
         return $holder;
 
     }); 
-    print_r(json_encode($trial));
-    // return json_encode()
-// return json_encode($trial);
 
-    }
+    return json_encode($trial);
+
+}
 
     if($query == 'challenge') {
 
         //Get name to append to URL
-        $name = $search_params;
+       $name = $search_params;
 
         // Index position of array that contains the numbers to be excluded in random. Default to last item in array
-        $index_pos = 0;
+       $index_pos = 0;
 
        //////// Check whether name in session array
        $found = false;
