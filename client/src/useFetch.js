@@ -13,12 +13,12 @@ const useFetch = (url) => {
     const[error, setError] = useState(null);
 
     useEffect(()=> {
-        fetch(url)
+        fetch(url, {mode: 'cors'})
             .then(res => {
                 if(!res.ok) {
-                    throw Error('Could not retrieve data ');
+                    throw Error('Could not retrieve data ' + res.statusText);
                 }
-              return res.json()
+              return res.json();
             })
             .then(data => {
                 setData(data)

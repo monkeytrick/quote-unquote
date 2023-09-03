@@ -4,21 +4,18 @@ import useFetch from "./useFetch";
 
 export default function PeopleOptions() {
 
-  const {data, isLoading, error} = useFetch('/')
+const {data, isLoading, error} = useFetch('http://localhost:8000/');
 
- 
+ console.log("data is " + data);
   return (
-    console.log(data)
     <div>
-        {
-        data.map((person) => {
-          return 
-          
-                <div>
-                    <a href={person.url}>{person.name}</a>   
-                </div>
-        })
-        }      
+        {data.map((person) => {
+          return <div>
+            <button type="button">{person.name}</button>
+          </div>
+        })}
     </div>
-  )
+    
+    
+  );
 }

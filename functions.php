@@ -1,5 +1,9 @@
 <?php
 session_start();
+header('Access-Control-Allow-Origin: *');
+header("Access-Control-Allow-Headers: 'X-Requested-With,content-type'");
+header("Access-Control-Allow-Methods: 'GET, POST, OPTIONS, PUT, PATCH, DELETE'");
+
 require 'vendor/autoload.php';
 
 error_reporting(E_ALL);
@@ -26,32 +30,27 @@ function url_call(String $query, $search_params) {
     }
 
     $browser = new HttpBrowser(HttpClient::create());
-
     $browser->request('GET', $url);
-
     $response_HTML = $browser->getResponse();
-
     $crawler = new Crawler($response_HTML);
 
     // Get names and URLS for front page
     if($query == 'begin') {
         
-      $trial = [];
+       $trial = [];
 
-      $persons = $crawler->filter('#content > table > tr > td > a');
+       $persons = $crawler->filter('#content > table > tr > td > a');
 
-      $trial = $persons->each(function (Crawler $node)  {
+       $trial = $persons->each(function (Crawler $node)  {
+         $holder['name'] = $node->text();
+         $holder['url'] = $node->attr('href');
+         return $holder;
 
-        $holder['name'] = $node->text();
-        $holder['url'] = $node->attr('href');
+       }); 
+    header('Content-Type: application/json');
+    echo json_encode($trial, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
 
-        return $holder;
-
-    }); 
-
-    return json_encode($trial);
-
-}
+    }
 
     if($query == 'challenge') {
 
