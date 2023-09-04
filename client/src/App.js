@@ -1,14 +1,14 @@
 // import logo from './logo.svg';
 import './App.css';
 import Header from './Header';
-import PeopleOptions from './PeopleOptions';
+import Home from './PeopleOptions';
 
 function App() {
   return (
     <div className="App">
       <Header />
 
-      <PeopleOptions/>
+      <Home/>
       {/* Form display fields
       Name list
       Quote as modal or field
