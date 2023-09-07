@@ -25,7 +25,7 @@ const useFetch = (url) => {
                 //Remove loading message
                 setLoaded(false)
                 setError(null)
-                console.log(data)
+                // console.log(data)
             })
             .catch(err=> {
                 console.log(err.message)
