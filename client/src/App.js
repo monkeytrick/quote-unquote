@@ -1,10 +1,10 @@
-// import logo from './logo.svg';
 import { useState } from 'react';
 import './App.css';
 import Header from './Header';
 import Home from './PeopleOptions';
 import useFetch from './useFetch';
 import QuoteArea from './QuoteArea';
+import ShowSelected from './ShowSelected';
 
 
 function App() {
@@ -19,37 +19,6 @@ function App() {
   const [optionsIsActive, setOptionsIsActive] = useState('false');
   
   const {data, isLoading, error} = useFetch('http://localhost:8000/');
-
-  //Handle options 
-  // function handler(person) {
-  //   // console.log("click for " + person.name)
-  //   // const max = 2;
-  //   // const names = [];
-  //   // if(person1 == ) {
-
-  //   // }
-
-  //   if(optionsIsActive == false) {
-  //     setOptionsIsActive();
-  //   }  
-  
-    // if(names.length < max) {
-    //   names.push(person)
-    //   console.log("request for " + person);
-    //   names.push(person);
-    //   //create object and push to array
-    //   //Loop through to create buttons with name as key - include delete option
-    //   //Or pass array to prop so can loop through to create buttons
-    //   names.forEach((name) => {})
-    // } else {
-    //   //return error
-    //   console.log("max names reached");
-    // }
-
- //If 
-    // if(names.length = 2) {
-    //   //Display fetch button or set as prop with values
-    // }
 
 
   // }
@@ -69,6 +38,13 @@ function App() {
 
       {/* if person one or two status set, display button area */}
 
+      {/* { person1 || person2 (<ShowSelected person1={{person1}} person2={{person2}}/>) } */}
+
+      <ShowSelected person1={ person1 } person2={ person2 } setPerson1= { setPerson1 } setPerson2={ setPerson2 }/>
+      
+
+      {/* If both are set, display button for search - pass urls as props */}
+
 
         <div>
 
@@ -82,45 +58,16 @@ function App() {
                 return <div className="col col-lg-3 m-2">
                           <button type="button" className="btn btn-outline-success" 
                                   key={person.name} 
-                                  //Need to wrap in anonymous function
-                                  // onClick={()=>{handler(person)}}>
-                                  //Could also check if useState for person is full, then add use state for two
-                                  // onClick={names.length < 2 ? setNames() : console.log("Max value reached")}>
-                                  onClick ={() => {
-                                    const findPerson = {name: person.name,
-                                                        url: person.url};
-                                    Object.keys(person1).length === 0 ? setPerson1(findPerson) 
-                                    : Object.keys(person2).length === 0 ? setPerson2({name: person.name, url: person.url}) 
-                                    //Handle error
-                                    : console.log("max value reached");
-
-                                      console.log(person1.findPerson.name)
-                                      console.log(person2)
-
-
-
-                                    // if(Object.keys(person1).length === 0) {
-                                    //   console.log("person one added")
-                                    //   setPerson1({findPerson})
-                                    // }
-                                    // else if(Object.keys(person2).length === 0) {
-                                    //   console.log("person two added")
-
-                                    //   setPerson2({findPerson})
-                                    // }
-                                    // else {
-                                    //   console.log("max value reached")
-                                    // }
-
-
-
-
+                                  //Need to wrap in anonymous function to prevent firing when loaded
+                                  onClick ={() => { 
+                                        Object.keys(person1).length === 0 ? setPerson1({name: person.name, url: person.url}) 
+                                      : Object.keys(person2).length === 0 ? setPerson2({name: person.name, url: person.url}) 
+                                      //Handle error
+                                      : console.log("max value reached");
                                     }
-                                      }
-                                        >
-                                  {person.name}                            
+                                    }>{person.name}                            
                           </button>
-                        </div>
+                       </div>
               })}
           </div>
         )}
