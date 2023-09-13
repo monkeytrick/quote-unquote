@@ -22,11 +22,14 @@ function url_call(String $query, $search_params) {
 
 
     // Base URL
-    $url = 'http://www.quotationspage.com/quotes/';
+    $url = 'http://www.quotationspage.com';
 
 
     if($search_params !== null) {
         $url = $url.$search_params;
+    }
+    else {
+        $url = $url."/quotes";
     }
 
     $browser = new HttpBrowser(HttpClient::create());
