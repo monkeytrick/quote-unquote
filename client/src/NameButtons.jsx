@@ -9,7 +9,6 @@ import useFetch from './useFetch';
   return (
     <div>
         
-        {/* Extract below to own component, with URL call */}
         { isLoading && <div>Loading...</div> }
 
         { error && <div>{error}</div> }
@@ -22,10 +21,7 @@ import useFetch from './useFetch';
                                   key={person.name} 
                                   //Need to wrap in anonymous function to prevent firing when loaded
                                   onClick ={() => { 
-                                      persons.length < 2 ? setPersons(persons => [...persons, {name: person.name, url: persons.url} ])
-                                      
-                                      //   Object.keys(person1).length === 0 ? setPerson1({name: person.name, url: person.url}) 
-                                      // : Object.keys(person2).length === 0 ? setPerson2({name: person.name, url: person.url}) 
+                                      persons.length < 2 ? setPersons(persons => [...persons, {name: person.name, url: person.url} ])
                                       //Handle error
                                       : console.log("max value reached");
                                     }

@@ -1,9 +1,8 @@
 import { FaTrash } from "react-icons/fa"
 import QuoteArea from "./QuoteArea"
 import useFetch from "./useFetch";
-import { useState } from "react";
 import GetQuote from "./GetQuote";
-// export default function ShowSelected( {person1, person2, setPerson1, setPerson2} ) { 
+import QuoteModal from "./QuoteModal";
 export default function ShowSelected( {persons, setPerson } ) {  
  
 // const [quote, setQuote] = useState('')
@@ -27,8 +26,9 @@ export default function ShowSelected( {persons, setPerson } ) {
 
                             </button>
                       </div>})
-            }
+             }
         </div>
+        { persons.length === 2 && <QuoteModal persons={persons} /> }
 
         {/* Check both names added to send to fetch */}
         {/* { person1.name && person2.name ? (<div className="row">

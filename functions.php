@@ -22,14 +22,14 @@ function url_call(String $query, $search_params) {
 
 
     // Base URL
-    $url = 'http://www.quotationspage.com';
+    $url = 'http://www.quotationspage.com/';
 
 
     if($search_params !== null) {
         $url = $url.$search_params;
     }
     else {
-        $url = $url."/quotes";
+        $url = $url.'/quotes';
     }
 
     $browser = new HttpBrowser(HttpClient::create());
@@ -99,10 +99,12 @@ function url_call(String $query, $search_params) {
         //Add number of quote to array containing quotes already used 
         array_push($_SESSION['Quotes_Used'][$index_pos]['quotes'], $rando);
 
-        // Return quote and name of person
-        var_dump($crawler->filter('.quote > a')->eq($rando)->text());
+        $quote = $crawler->filter('.quote > a')->eq($rando)->text();
 
-        //Re-set session variables if player wants more than seven goes
+        // Return quote 
+        echo json_encode($quote, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE);
+
+        //Re-set session variables if player wants more than seven attempts
     }
 }
 
