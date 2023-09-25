@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 
 //Custom hooks must begin with 'use..'
 const useFetch = (url) => {
-
         // Example of useState. Used for variables that will change. 'blogs' is the reference for the initial data, which is 
     // set as null (empty)in the useState method. Calling setBlogs and passing new data to this / setBlogs(newdata) \ will update this.
     const [data, setData] = useState(null);
@@ -13,6 +12,8 @@ const useFetch = (url) => {
     const[error, setError] = useState(null);
 
     useEffect(()=> {
+        console.log('url called')
+
         fetch(url, {mode: 'cors'})
             .then(res => {
                 if(!res.ok) {

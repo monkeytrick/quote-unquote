@@ -1,22 +1,30 @@
-import useFetch from "./useFetch"
+import { useState } from "react";
 
+export default function QuoteModal( { persons, selected, setSelected, setQuote } ) {
 
-export default function GetQuote( { person1, person2, setQuote } ) {
+    console.log("Modal rendered")
 
-const {data:quote, isLoading:wait, error:problem} = useFetch(`http://localhost:8000/?q=challenge&p1=${person1.url}&p2=${person2.url}`);
-
-const clickHandler = () => {
-    console.log("clicked", quote)
-    // setQuote(quote);
-    useFetch.then(
-        res=> {
-console.log(res)        }
-    )
-}
+    const handleClick = () => {
+      // console.log("setSelected is ", setSelected)
+        const selectedPerson = persons[Math.floor(Math.random() * 2)];
+        setSelected(selectedPerson)
+        setQuote(true)
+        console.log("Selected is ", selectedPerson)
+        console.log("setState obj is " + selected.name)
+    }
 
   return (
     <div>
-        <button onClick={ clickHandler }>Get Quote</button>      
+
+               
+        {/* Wrapped in anonymous function to prevent re-render */}
+        <button type="button" onClick={ handleClick }className="btn btn-primary">
+                Get Quote</button>
+        {/* //Change to single button. Have modal rendered once */}
+        {/* {selected && <QuoteModal persons={persons} selected={selected}/>} */}
+        {}
+
+           
     </div>
   )
 }
